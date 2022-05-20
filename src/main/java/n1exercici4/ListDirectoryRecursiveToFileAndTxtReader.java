@@ -1,24 +1,37 @@
-package n1exercici3;
+package n1exercici4;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 
-public class ListDirectoryRecursiveToFile {
+public class ListDirectoryRecursiveToFileAndTxtReader {
     public static void main(String[] args) {
 
-        if (args.length > 0) {
+        if (args.length > 0 && !args[0].contains(".txt")) {
             String fileToStore = System.getProperty("user.home") + File.separator + "filesList.txt";
             try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileToStore))) {
                 listFilesFromDirectory(args[0], bufferedWriter, 0);
             } catch (IOException e) {
-                System.out.println("Error escribiendo el archivo.");
+                System.out.println("Error creando el archivo.");
+            }
+        } else if (args.length > 0 && args[0].contains(".txt")) {
+            try {
+                readTxtFile(args[0]);
+            } catch (IOException e) {
+                System.out.println("Error leyendo el archivo.");
             }
         } else {
-            System.out.println("Por favor, introduce la ruta de un directorio.");
+            System.out.println("Por favor, introduce la ruta de un directorio o de un archivo .txt.");
         }
+    }
+
+    private static void readTxtFile(String arg) throws IOException {
+        File txtFile = new File(arg);
+        FileReader fileReader = new FileReader(txtFile);
+        int character;
+        while ((character = fileReader.read()) != -1) {
+            System.out.print((char) character);
+        }
+        fileReader.close();
     }
 
     public static void listFilesFromDirectory(String directory, BufferedWriter bufferedWriter, int tabs) throws IOException {

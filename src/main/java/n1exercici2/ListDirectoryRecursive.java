@@ -10,13 +10,17 @@ import java.util.stream.Stream;
 
 public class ListDirectoryRecursive {
     public static void main(String[] args) {
-        listFilesFromDirectory(args[0], 0);
+        if (args.length > 0) {
+            listFilesFromDirectory(args[0], 0);
+        } else {
+            System.out.println("Por favor, introduce la ruta de un directorio.");
+        }
     }
 
     public static void listFilesFromDirectory(String directory, int tabs) {
         File currentDirectory = new File(directory);
         File[] filesAndFolders = currentDirectory.listFiles();
-        if (filesAndFolders != null && filesAndFolders.length > 0) {
+        if (currentDirectory.exists() && currentDirectory.isDirectory() && filesAndFolders != null && filesAndFolders.length > 0) {
             Arrays.sort(filesAndFolders);
             for (File file : filesAndFolders) {
                 for (int i = 0; i < tabs; i++) {
@@ -29,6 +33,8 @@ public class ListDirectoryRecursive {
                     System.out.println("F - " + file.getName() + " - " + new Date(file.lastModified()));
                 }
             }
+        } else {
+            System.out.println("El directorio no existe.");
         }
     }
 
