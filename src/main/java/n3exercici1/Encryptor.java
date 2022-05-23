@@ -27,7 +27,7 @@ public class Encryptor {
         byte[] encryptedData = null;
         byte[] data = Files.readAllBytes(file.toPath());
         try {
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, sKey);
             encryptedData = cipher.doFinal(data);
             FileOutputStream fos = new FileOutputStream(destinationFile);
